@@ -11,9 +11,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		000000000000000000000010 /* Task Tracker Swift UI */ = {
+		000000000000000000000010 /* TaskTracker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Task Tracker Swift UI";
+			path = TaskTracker;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -30,7 +30,7 @@
 		000000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
-				000000000000000000000010 /* Task Tracker Swift UI */,
+				000000000000000000000010 /* TaskTracker */,
 				000000000000000000000020 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -57,7 +57,7 @@
 			buildRules = (
 			);
 			fileSystemSynchronizedGroups = (
-				000000000000000000000010 /* Task Tracker Swift UI */,
+				000000000000000000000010 /* TaskTracker */,
 			);
 			name = "Task Tracker Swift UI";
 			productName = MyApp;
