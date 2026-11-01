@@ -1,0 +1,70 @@
+{
+  "componentVersion": 1,
+  "stylesheet": {
+    "compact-title": {
+      "font": { "named": "subheadline", "weight": "semibold" },
+      "lineLimit": 1
+    },
+    "compact-date": {
+      "font": { "named": "caption2" },
+      "foregroundStyle": "secondary"
+    }
+  },
+  "root": {
+    "type": "ZStack",
+    "props": { "alignment": "leading" },
+    "style": {
+      "clipShape": "roundedRectangle",
+      "cornerRadius": 12,
+      "shadow": { "color": "$categoryColor|opacity:0.08", "radius": 4, "x": 0, "y": 2 }
+    },
+    "children": [
+      {
+        "comment": "Background gradient",
+        "type": "RoundedRectangle",
+        "props": { "cornerRadius": 12 },
+        "style": {
+          "fill": {
+            "type": "linearGradient",
+            "colors": ["$categoryColor|opacity:0.12", "$categoryColor|opacity:0.03"],
+            "startPoint": "leading",
+            "endPoint": "trailing"
+          }
+        }
+      },
+      {
+        "comment": "Content row",
+        "type": "HStack",
+        "props": { "alignment": "center", "spacing": 10 },
+        "style": { "padding": 12 },
+        "children": [
+          {
+            "type": "NativeComponent",
+            "props": { "name": "PriorityDot", "priority": "$task.priority" }
+          },
+          {
+            "type": "VStack",
+            "props": { "alignment": "leading", "spacing": 2 },
+            "children": [
+              {
+                "type": "Text",
+                "props": { "content": "$task.title" },
+                "styleClass": "compact-title"
+              },
+              {
+                "type": "Text",
+                "props": { "content": "$task.dueDate" },
+                "styleClass": "compact-date"
+              }
+            ]
+          },
+          { "type": "Spacer" },
+          {
+            "type": "NativeComponent",
+            "props": { "name": "CategoryPill", "category": "$task.category", "color": "$categoryColor" }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "componentVersion": 1,
+  "stylesheet": {
+    "card-title": {
+      "font": { "named": "headline" },
+      "lineLimit": 1
+    },
+    "card-subtitle": {
+      "font": { "named": "subheadline" },
+      "foregroundStyle": "secondary",
+      "lineLimit": 2,
+      "fixedSize": { "horizontal": false, "vertical": true }
+    },
+    "progress-label": {
+      "font": { "named": "caption2", "weight": "semibold" },
+      "foregroundStyle": "secondary"
+    },
+    "progress-pct": {
+      "font": { "named": "caption2", "weight": "bold" },
+      "frame": { "width": 32, "alignment": "trailing" }
+    }
+  },
+  "root": {
+    "type": "ZStack",
+    "props": { "alignment": "topLeading" },
+    "style": {
+      "clipShape": "roundedRectangle",
+      "cornerRadius": 16,
+      "shadow": { "color": "$categoryColor|opacity:0.12", "radius": 8, "x": 0, "y": 4 }
+    },
+    "children": [
+      {
+        "comment": "Layer 0: gradient background card",
+        "type": "RoundedRectangle",
+        "props": { "cornerRadius": 16 },
+        "style": {
+          "fill": {
+            "type": "linearGradient",
+            "colors": ["$categoryColor|opacity:0.18", "$categoryColor|opacity:0.04"],
+            "startPoint": "topLeading",
+            "endPoint": "bottomTrailing"
+          }
+        }
+      },
+      {
+        "comment": "Layer 1: watermark symbol",
+        "type": "Image",
+        "props": { "systemName": "$task.coverSymbol" },
+        "style": {
+          "font": { "size": 96 },
+          "foregroundStyle": "$categoryColor|opacity:0.08",
+          "frame": { "maxWidth": "infinity", "maxHeight": "infinity", "alignment": "bottomTrailing" },
+          "padding": 12
+        }
+      },
+      {
+        "comment": "Layer 2: main content",
+        "type": "VStack",
+        "props": { "alignment": "leading", "spacing": 10 },
+        "style": { "padding": 14 },
+        "children": [
+          {
+            "comment": "Top row: category + priority + completion",
+            "type": "HStack",
+            "props": { "spacing": 6 },
+            "children": [
+              {
+                "type": "NativeComponent",
+                "props": { "name": "CategoryPill", "category": "$task.category", "color": "$categoryColor" }
+              },
+              {
+                "type": "NativeComponent",
+                "props": { "name": "PriorityDot", "priority": "$task.priority" }
+              },
+              { "type": "Spacer" },
+              {
+                "type": "NativeComponent",
+                "props": { "name": "CompletionBadge", "isCompleted": "$task.isCompleted" }
+              }
+            ]
+          },
+          {
+            "comment": "Title + description",
+            "type": "VStack",
+            "props": { "alignment": "leading", "spacing": 4 },
+            "children": [
+              {
+                "type": "Text",
+                "props": { "content": "$task.title" },
+                "styleClass": "card-title",
+                "style": {
+                  "foregroundStyle": {
+                    "type": "conditional",
+                    "condition": "$task.isCompleted",
+                    "true": "secondary",
+                    "false": "primary"
+                  },
+                  "strikethrough": "$task.isCompleted"
+                }
+              },
+              {
+                "type": "Text",
+                "props": { "content": "$task.description" },
+                "styleClass": "card-subtitle"
+              }
+            ]
+          },
+          {
+            "comment": "Progress row",
+            "type": "HStack",
+            "props": { "spacing": 8 },
+            "children": [
+              {
+                "type": "Text",
+                "props": { "content": "Progress" },
+                "styleClass": "progress-label"
+              },
+              {
+                "type": "NativeComponent",
+                "props": { "name": "ProgressBar", "progress": "$task.progress", "color": "$categoryColor" }
+              },
+              {
+                "type": "Text",
+                "props": { "content": "$task.progress|percent" },
+                "styleClass": "progress-pct",
+                "style": { "foregroundStyle": "$categoryColor" }
+              }
+            ]
+          },
+          {
+            "comment": "Tags row",
+            "type": "HStack",
+            "props": { "spacing": 6 },
+            "children": [
+              {
+                "type": "ForEach",
+                "forEach": { "dataBinding": "$task.tags", "itemAlias": "tag" },
+                "children": [
+                  {
+                    "type": "NativeComponent",
+                    "props": { "name": "TagChip", "label": "$tag" }
+                  }
+                ]
+              },
+              { "type": "Spacer" }
+            ]
+          },
+          {
+            "comment": "Footer row: assignees + metadata",
+            "type": "HStack",
+            "props": { "alignment": "center", "spacing": 12 },
+            "children": [
+              {
+                "type": "NativeComponent",
+                "props": { "name": "AssigneeStack", "assignees": "$task.assignees" }
+              },
+              { "type": "Spacer" },
+              {
+                "type": "HStack",
+                "props": { "spacing": 10 },
+                "children": [
+                  { "type": "NativeComponent", "props": { "name": "MetaLabel", "symbol": "bubble.right", "value": "$task.commentCount" } },
+                  { "type": "NativeComponent", "props": { "name": "MetaLabel", "symbol": "paperclip",    "value": "$task.attachmentCount" } },
+                  { "type": "NativeComponent", "props": { "name": "MetaLabel", "symbol": "calendar",     "value": "$task.dueDate" } }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
